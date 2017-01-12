@@ -1,0 +1,416 @@
+Begriffserklärung:
+
+puts ................... Wie printf nur das kein \n geschrieben werden muss.
+char str[x] ............ Variabel die mehrere Werte (x) speichern kann.
+strlen(VARNAME) ........ Zahl der Werte in der Variabel (String Länge)
+write() ................ Schreibt bytes auf den Bildschirm aus
+printf() ............... Schreibt eine formatierte Ausgabe auf den Bildschirm aus
+fprintf() .............. Schreibt die Ausgabe in eine filename
+
+getc() ................. Lesen ein einziges Zeichen von der Tastatur ein
+getchar() .............. Selbes wie getc()
+gets() ................. IST NICHT MEHR IM STANDARD: Bringt den buffer zum overflow und bringt das Programm zum abstürzen, bleibt jedoch im Speicher, dadurch konnten x Zeichen eingelesen werden, selbst wenn das Programm selbst nicht mehr ausgeführt wurde.
+fgets() ................ Selbes wie gets() nur bestimmte Anzahl an Zeichen
+scanf() ................ ließt eine Eingabefolge und intepretiert diese
+getchar() .............. getchar nach einem scanf frisst das letzte \n weg.
+read() ................. liest bytes ein
+stdout ................. Schreibt den Inhalt einer Variabel (char) auf den Bildschirm aus
+const .................. Ist eine konstante Variable die am Anfang definiert wird und im Verlauf des Codes nie wieder geändert werden darf.
+volatile ............... Sagt dem compiler, dass diese Variable nicht mehr geändert werden darf.
+static ................. vor einer Variablendeglation, ist dafür das der Wert der Variable erhalten bleibt. Kann nur innerhalb der Datei verwendet werden.
+extern ................. Variable Sichtbar nach außen hin machen. Steht standardmässig schon explizit dort.
+
+char *fgets(char *s, int size, FILE*stream);
+
+scanf("%*s“); .......... Ließ den wert bis zum nächsten Enter, Leerzeichen, etc. ein
+
+#############################################################################################################
+bsp:
+	for (i = 0; i < strlen(str); i++) // Zählt von i=0 bis der letzte Wert der Variabel abgezählt wurde
+			printf("%c", str[i]);
+			
+	for (Initialisierung; Bedingung; Schleifeninkrement)
+	{
+		//Schleifenkörper
+	}
+#############################################################################################################
+
+FILE * pFile;
+
+pFile=fopen(argv[1], "wt"); //File wird eingelesen bzw. geöffnet (w)=write, (t)=wenn nicht vorhanden neu schreiben
+	
+	if(pFile==NULL)
+		perror("fopen error");
+	
+	
+	fclose (pFile);
+#############################################################################################################
+
+BINÄR   HEX
+
+0000	0x0
+0001	0x1
+0010	0x2
+0011	0x3
+0100	0x4
+0101	0x5
+0110	0x6
+0111	0x7
+1000	0x8
+1001	0x9
+1010	0xA
+1011	0xB
+1100	0xC
+1101	0xD
+1110	0xE
+1111	0xF
+
+1010 1000 0010 1101
+0xA	   8    2    D
+
+1101 -> (1x2^3)+(1x2^2)+(0x2^1)+(1x2^0)
+#############################################################################################################
+	
+Debugging:
+	cmd:
+	Beim kompellieren (gcc -Wall --pedantic filename -g), -g für Debuginformation
+	
+	Debuggen: gdb filename.exe
+	Debuggen: lldb
+	settings set target.run-args ARGUMENTS
+	=> Neuer Command Prompt
+	
+	Debugger Befehle:
+		b .............. Breakpoint //Sourcecode wo das Programm anhalten soll (In der Mitte anhalten)
+		b main
+		
+		r .............. run //Programm ausführen bis zu Breakpoint
+		
+		p .............. print //Variablen ausgeben
+		p i
+		
+		s .............. step //Eine Zeile weiter (Breakpoint versetzten), mit Zahl hinter s können mehrere Schritte erstellt werden
+		s 10
+		
+		l .............. list //Zeigt den Sourcecode wo er gerade steht 5 Zeilen davor und dannach
+		
+		disp ........... display Variabel wird bei jedem Schritt ausgegeben
+		disp i
+		
+		q .............. quit
+		
+	Reinfolge:
+		gcc FILENAME.c -g
+		gdb FILENAME.exe
+		(gdb) b main
+		(gdb) run
+		(gdb) p i
+		(gdb) p j
+		(gdb) s
+		
+		(gdb) q
+		(gdb) y
+		
+	CodeBlocks:
+		Debug-Toolbar
+			Roter Pfeil (run Befehl)
+			Rotes Viereck + x (quit Befehl)
+			Debug Windows
+				Watches - zeigt Variablen und Werte
+			
+			Rote Punkte im Quellcode setzten für breakpoints
+			
+			Gelber Pfeil zeigt Debugger Stelle
+			
+			Step Into - Springt eine Zeile weiter
+			
+			Bei Watches i -> Rechtsklick -> Properties -> Parameter können gesetzt werden
+			
+#############################################################################################################
+IF BEDINGUNG
+
+if ((5==a)&&(7==b))
+{
+
+}	
+	Dient dazu falls man das 2. = vergisst, dass man der Variabel keinen Wert zuweist und den Inhalt der if-Bedingung nicht ausführt.			
+#############################################################################################################
+SWITCH
+
+switch(a)
+{
+	case 0: {a=a+1; b=b*2;} break;
+	case 1: {a=a-2; b=b*3;} break;
+	default: { ; } break;			//Immer benötigt
+}
+#############################################################################################################
+WHILE
+
+while ((5==a) || (7==b))
+{
+
+}
+#############################################################################################################
+DO-WHILE
+
+do
+{
+
+}
+while ((5==a) || (7==b))
+#############################################################################################################
+FOR SCHLEIFE
+
+for (Initialisierung; Bedingung; Schleifeninkrement / -dekrement)
+{
+	a=a+i;
+}
+#############################################################################################################
+CONTINUE
+
+for (i=0; i < 5; i++)
+{
+	if (i == 2)
+	continue;
+	printf("%d\n",i);
+}
+Gibt 0, 1, 2 aus (continue, bricht alles unter dem continue ab und springt zur abfrage)
+#############################################################################################################
+BREAK
+
+for (i=0; i < 5; i++)
+{
+	if (i == 2)
+	break;
+	printf("%d\n",i);
+}
+Gibt 0, 1 aus und bricht dannach ab.
+#############################################################################################################
+GOTO
+
+goto label;
+
+label:
+Springt in die Zeile label, soll jedoch nicht verwendet werden.
+#############################################################################################################
+			______ myFancyVariable;
+			^
+signed		int - //ganze Zahlen
+unsigned	^
+signed		char
+unsigned
+
+char letter;
+letter = '0';	//'0' ist das selbe wie 48, da 48 das Zeichen 0 ist.
+letter =  48;
+
+letter =   0;	//0 ist ein anderes Zeichen als 48.
+
+char			//Symbole der ASCII-Tabelle
+char letter[42];//letter[0] = 'M'; letter[1] = 'a'; char letter[42] = "Ma";
+float pi;		//Fließkommerzahlen pi=3.14
+float pi[12];
+double
+
+myFancyVariable = letter;	//ACHTUNG! Datentyp vergleichen, ob es zu keinen Komplikationen führen kann.
+
+myFancyVariable = (int)letter[0];	//Ist besser als vorher. Die Variable "myFancyVariable" trägt den Wert 77
+letter[0] = (char)myFancyVariable;
+#############################################################################################################
+
+Pointer in C
+
+#############################################################################################################
+
+Programme mit Command Zeilenargumente auslesen und interpretieren (siehe Programm: 14_161020_command_arguments)
+
+are.exe -r -h 5.0 -b 3.0		//Wir erhalten immer nur eine Zeichenkette, keine Fließkommerzahl, Zeichen, etc.
+
+int main(int argc, char *argv[])	//argc..... argument count; argv[]..... Pointer auf
+
+****
+input: area r 5.0 3.0
+
+int main(int argc, char *argv[])
+{
+    if (argc < 3 || argc > 4)
+        printf("Wrong number of arguments!\n");
+    
+    if (argv[1][0] == 'r') in [1][0] wird in der Zeichenkette 1 der Wert in 0 ausgelesen in dem Fall "r" [1][1] gibt den Wert "\0" aus.
+    
+    return 0;
+}
+
+#############################################################################################################
+
+dynamisches Speichermanagement
+
+Funktionen:
+malloc ............	alloziert Speicher, man bekommt Speicher von einer gewissen Portionsgröße. Mit dem charpointer legt man die Portionsgröße fest.
+					Hat genauso viel Speicher, wie benötigt wird.
+					
+					int *pMem;
+					pMem = (int *)malloc(MAX_NUMBER*sizeof(int));
+					 
+					malloc so verwenden wie auf Seite 70 c-slides.pdf  Box 3.
+calloc ............	alloziert den gesammten Speicher mit Nullen. Daher wird in jeder Speicherzelle 0 eingeschrieben.
+realloc ...........	relloc lässt den allozierten Speicher um eine Größe wachsen.
+free ..............	Am Ende des Programms, damit geben wir den Speicher an das System zurück.
+
+					free(pMem);
+					pMem = NULL;
+
+Wird immer benötigt bei den Tasks, sonst Punkteabzug
+
+#############################################################################################################
+
+Filehandling
+
+Zum einlesen einer Datei FILE *pF;
+
+fopen hat zwei Argumente: Dateiname und Modus 
+
+pF = fopen(argv[1], "r");	//read from file
+pF = fopen(argv[1], "w");	//write file
+pF = fopen(argv[1], "a");	//append something in file
+
+if (pF == NULL)
+	exit(EXIT_FAILURE);
+
+pF = fclose(pF);			//schreibt die Datei auf die Festplatte
+
+
+#############################################################################################################
+
+arrays, dyn Speichermanagement, Filehandling noch durchgehen
+
+Befehle für dynamisches Speichermanagement:
+
+malloc
+calloc
+realloc
+free
+
+Befehle für Filehandling:
+
+fopen
+fgetc	fputc
+fgets	fputs
+
+fscanf	fprintf
+
+fread	fwrite
+
+fclose
+
+fgets...........Ließt die gesamte Zeile ein.
+
+#############################################################################################################
+Bildbearbeitung mit PPM:
+
+PPM Datei kann als ASCII oder RAW abgespeichert werden. Wir verwenden ASCII
+
+#############################################################################################################
+#	P3																										#
+#	#																										#
+#	500		300		//Pixel																					#
+#	255			//Farben																					#
+#				//	R	G	B																				#
+#	0	0	0		255	255	255																				#
+#																											#
+#																											#
+#																											#
+#																											#
+#############################################################################################################
+
+#############################################################################################################
+struct
+
+struct pixel {
+	unsigned int r;
+	unsigned int g;
+	unsigned int b;
+};
+struct pixel p;			p.r=255;
+						p.b=0;
+
+
+						
+struct auto {
+	char brand[50];
+	int power;
+};
+
+struct Auto a;
+
+a.brand = "AUDI"; // FALSCH !!!!
+
+strcpy (a.brand, "AUDI");
+a.power = 125;
+
+
+
+typedef struct pixel PIXEL;
+PIXEL p;
+
+char brand[80];
+
+brand = "AUDI" // FALSCH !!!
+brand[0] = "A"
+brand[1] = "U"
+
+#############################################################################################################
+x = 5;	| x = 5;		x = 5;	| x = 5;
+y = ++x;| x = x+1;		y = x++;| y = x;
+	| y = x				| x = x + 1;
+	| 				|
+	| x = 6;			| x = 6;
+	| y = 6;			| y = 5;
+
+
+x += y;	| x = x + y;
+x %= y;	| x = x % y;
+x *= y;	| x = x * y;
+x /= y;	| x = x / y;
+x >>= y;| x = x >> y;
+
+
+#############################################################################################################
+void fancy (void *x, void *y)
+{
+	
+}
+
+die Variablen werden später definiert, und müssen nicht vorher definiert werden.
+
+#############################################################################################################
+void recursive_function(int n)
+{
+	if (n < 10)
+	{
+		printf("%d\n",n);
+		recursive_function (n + 1);
+	}
+}
+
+6, 7, 8, 9
+
+void recursive_function(int n)
+{
+	if (n < 10)
+	{
+		recursive_function (n + 1);
+		printf("%d\n",n);
+	}
+}
+9, 8, 7, 6
+
+ruft die Funktion mehrmals auf.
+
+
+
+Test:
+	Verkettete Listen
+	Einfache verkettete Listen
+	Theorie
+	(Wie kann ich sortieren, tauschen, rausnehmen?)
